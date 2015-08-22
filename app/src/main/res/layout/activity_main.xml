@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Name" />
+    <EditText
+        android:id="@+id/txtName"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Grade" />
+    <EditText
+        android:id="@+id/txtGrade"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+    <Button
+        android:text="Add Name"
+        android:id="@+id/btnAdd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickAddName" />
+    <Button
+        android:text="Retrieve Students"
+        android:id="@+id/btnRetrieve"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickRetrieveStudents" />
+
+    <Button android:id="@+id/btnStartService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_service"
+        android:layout_margin="@dimen/button_margin"
+        android:textSize="@dimen/button_text_size"
+        android:onClick="startService"/>
+
+    <Button android:id="@+id/btnStopService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stop_service"
+        android:layout_margin="@dimen/button_margin"
+        android:textSize="@dimen/button_text_size"
+        android:onClick="stopService" />
+
+    <Button android:id="@+id/btnStartBroadcast"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/broadcast_intent"
+        android:layout_margin="@dimen/button_margin"
+        android:textSize="@dimen/button_text_size"
+        android:onClick="broadcastIntent"/>
+</LinearLayout>
