@@ -3,6 +3,7 @@ package com.example.shehbaz.helloworld;
 /**
  * Created by shehbaz on 4/28/15.
  */
+
 import java.util.HashMap;
 
 import android.content.ContentProvider;
@@ -34,7 +35,8 @@ public class StudentsProvider extends ContentProvider {
     static final int STUDENT_ID = 2;
 
     static final UriMatcher uriMatcher;
-    static{
+
+    static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "students", STUDENTS);
         uriMatcher.addURI(PROVIDER_NAME, "students/#", STUDENT_ID);
@@ -58,20 +60,19 @@ public class StudentsProvider extends ContentProvider {
      * the provider's underlying data repository.
      */
     private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context){
+        DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
         @Override
-        public void onCreate(SQLiteDatabase db)
-        {
+        public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_DB_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion,
                               int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " +  STUDENTS_TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + STUDENTS_TABLE_NAME);
             onCreate(db);
         }
     }
@@ -85,7 +86,7 @@ public class StudentsProvider extends ContentProvider {
          * creation if it doesn't already exist.
          */
         db = dbHelper.getWritableDatabase();
-        return (db == null)? false:true;
+        return (db == null) ? false : true;
     }
 
     @Override
@@ -93,12 +94,11 @@ public class StudentsProvider extends ContentProvider {
         /**
          * Add a new student record
          */
-        long rowID = db.insert(	STUDENTS_TABLE_NAME, "", values);
+        long rowID = db.insert(STUDENTS_TABLE_NAME, "", values);
         /**
          * If record is added successfully
          */
-        if (rowID > 0)
-        {
+        if (rowID > 0) {
             Uri _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
             getContext().getContentResolver().notifyChange(_uri, null);
             return _uri;
@@ -118,18 +118,18 @@ public class StudentsProvider extends ContentProvider {
                 qb.setProjectionMap(STUDENTS_PROJECTION_MAP);
                 break;
             case STUDENT_ID:
-                qb.appendWhere( _ID + "=" + uri.getPathSegments().get(1));
+                qb.appendWhere(_ID + "=" + uri.getPathSegments().get(1));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
-        if (sortOrder == null || sortOrder == ""){
+        if (sortOrder == null || sortOrder == "") {
             /**
              * By default sort on student names
              */
             sortOrder = NAME;
         }
-        Cursor c = qb.query(db,	projection,	selection, selectionArgs,
+        Cursor c = qb.query(db, projection, selection, selectionArgs,
                 null, null, sortOrder);
         /**
          * register to watch a content URI for changes
@@ -143,13 +143,13 @@ public class StudentsProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int count = 0;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case STUDENTS:
                 count = db.delete(STUDENTS_TABLE_NAME, selection, selectionArgs);
                 break;
             case STUDENT_ID:
                 String id = uri.getPathSegments().get(1);
-                count = db.delete( STUDENTS_TABLE_NAME, _ID +  " = " + id +
+                count = db.delete(STUDENTS_TABLE_NAME, _ID + " = " + id +
                         (!TextUtils.isEmpty(selection) ? " AND (" +
                                 selection + ')' : ""), selectionArgs);
                 break;
@@ -166,7 +166,7 @@ public class StudentsProvider extends ContentProvider {
                       String[] selectionArgs) {
         int count = 0;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case STUDENTS:
                 count = db.update(STUDENTS_TABLE_NAME, values,
                         selection, selectionArgs);
@@ -178,7 +178,7 @@ public class StudentsProvider extends ContentProvider {
                                 selection + ')' : ""), selectionArgs);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown URI " + uri );
+                throw new IllegalArgumentException("Unknown URI " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
@@ -186,7 +186,7 @@ public class StudentsProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             /**
              * Get all student records
              */
