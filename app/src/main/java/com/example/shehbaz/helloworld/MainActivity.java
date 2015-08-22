@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onStop(){
         super.onStop();
         Log.d(msg,"OnStop Event");
+
     }
 
     @Override
